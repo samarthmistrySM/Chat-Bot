@@ -9,7 +9,7 @@ export default function ChatHeader() {
       <img src={dp} alt="dp" />
       </div>
       <div className='w-full flex justify-between items-center px-3'>
-        <h2 className='text-white text-xl font-semibold'>Alice</h2>
+        <h2 className='text-white text-xl font-semibold'>Gemini</h2>
         <button><FiInfo className='text-xl font-semibold text-white'/></button>
       </div>
     </div>
