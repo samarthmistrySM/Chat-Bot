@@ -1,5 +1,5 @@
 import React from 'react'
-import ChatApp from '../components/ChatApp'
+import ChatApp from './components/ChatApp.jsx'
 
 export default function App() {
   return (
