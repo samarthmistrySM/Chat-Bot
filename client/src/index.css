@@ -19,3 +19,10 @@ code {
 .inputTag:focus-within{
   border-color: white;
 }
+
+.chatApp{
+  @media (min-width: 768px)  {
+    background-image: url(./Images/Desktop-Wallpaper.png);
+  }
+  background-image: url(./Images/phone-wallpaper.png);
+}
