@@ -5,8 +5,9 @@ import { useState } from "react";
 import SentChat from "./MessagesType/SentChat";
 import ReceivedChat from "./MessagesType/ReceivedChat";
 import ErrorResponse from "./MessagesType/ErrorResponse";
+import ImageResponse from "./MessagesType/ImageResponse";
 
-export default function MessageSender({ setMessages }) {
+export default function MessageSender({ setMessages,type }) {
   const [prompt, setPrompt] = useState("");
 
   const handleSend = async (e) => {
@@ -17,25 +18,33 @@ export default function MessageSender({ setMessages }) {
     setPrompt("");
 
     try {
-      const response = await axios.post("http://localhost:4000/text", {
+      const response = await axios.post(`http://localhost:4000/${type}`, {
         prompt,
       });
-
+      
       const contentType = response.headers.get("Content-Type");
-
       if (contentType.includes("application/json"))
         throw new Error("Invalid Response Occured!");
 
       else if (response) {
-        const converted = JSON.stringify(response.data);
+        const data = (response.data);
 
-        setMessages((prev) => [
-          ...prev,
-          <ReceivedChat receivedChat={converted} />,
-        ]);
+        if(type === "image"){
+          setMessages((prev) => [
+            ...prev,
+            <ImageResponse imgUrl={data} />,
+          ]);
+        }else{
+          setMessages((prev) => [
+            ...prev,
+            <ReceivedChat receivedChat={data} />,
+          ]);
+        }
+
+        
       }
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
 
       setMessages((prev) => [
         ...prev,
@@ -46,7 +55,7 @@ export default function MessageSender({ setMessages }) {
 
   return (
     <div
-      className="flex p-3 items-center"
+      className="flex w-full p-3 items-center"
       style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
     >
       <div className="p-4 rounded-full border-2 text-gray-400 border-gray-400 md:hover:text-white md:hover:border-white">
